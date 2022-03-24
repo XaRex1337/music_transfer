@@ -1,5 +1,5 @@
 # music_transfer
-using api of platforms with music i will try to make a program to transfer music
+using api of platforms with music i will try to make a program to transfer music and automatically edit playlists and albums
 
 current functionality:
 - interaction with menu
