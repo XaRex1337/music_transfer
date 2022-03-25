@@ -5,4 +5,4 @@ current functionality:
 - interaction with menu
 - help menu
 - vk auth
-- vk show albums
+- vk show albums, album tracks, album tracks repeats
