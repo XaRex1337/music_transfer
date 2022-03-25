@@ -8,11 +8,9 @@ def print_help():
     """
     prints help info
     """
-    print("---------------------------")
     print("commands")
     print("- exit ~ break cycle and end code implementation")
     cvk_help()
-    print("---------------------------")
 
 if __name__ == "__main__": # launched as main file
     # check&create files
@@ -23,8 +21,8 @@ if __name__ == "__main__": # launched as main file
     print("music transfer")
     print("- github ~ https://github.com/XaRex1337/music_transfer")
     print("! for commands enter 'help'")
-    print("---------------------------")
-    
+
+    print("---------------------------")    
     uinput = str(input("command: ")).lower()
     while uinput != "exit":
         if uinput == "help":
@@ -37,10 +35,40 @@ if __name__ == "__main__": # launched as main file
             if uinput == "vkf":
                 vk = cvk_from_file()
                 
-            if vk == None:
-                cvk_on_need(vk)
-            if uinput == "vk show albums":
-                for a in list(vk.albums()):
+            # can't do anything w/o cvk
+            while vk == None or vk.api == None:
+                vk = cvk_on_need(vk)
+                if vk == 'e':
+                    break
+
+            if uinput == "vk show a":
+                n = int(input("amount of albums: "))
+                albums = vk.albums(n)
+                print("+ got album list")
+                for a in albums:
                     print(str(a))
 
+            if uinput == "vk show at":
+                a = str(input("enter album title: "))
+                album = vk.get_album(a) # searching for correct album
+                print("+ got album")
+                print(str(album))
+                if album != None:
+                    n = int(input("amount of tracks: "))
+                    tracks = vk.album_tracks(album.vk_owner_id, album.vk_album_id, n)
+                    print("+ got track list")
+                    for b in list(tracks):
+                        print(str(b))
+
+            if uinput == "vk show at repeat":
+                a = str(input("album title: "))
+                album = vk.get_album(a) # searching for correct album
+                print("+ got album")
+                print(str(album))
+                if album != None:
+                    tracks = vk.album_tracks(album.vk_owner_id, album.vk_album_id, 0)
+                    print("+ got track list")
+                    show_at_repeat(tracks)
+                    
+        print("---------------------------")
         uinput = input("command: ")
