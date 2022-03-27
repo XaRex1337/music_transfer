@@ -28,7 +28,10 @@ if __name__ == "__main__": # launched as main file
         if uinput == "help":
             print_help()
 
-        if uinput.__contains__("vk"):
+        if uinput == "vk help":
+            cvk_help()
+
+        if uinput.__contains__("vk") and uinput != "vk help":
             if uinput == "vk":
                 vk = cvk_from_input()
 
@@ -80,7 +83,7 @@ if __name__ == "__main__": # launched as main file
             if uinput == "vk show at repeat id":
                 a = str(input("album owner_id: "))
                 albums = vk.get_albums(a)
-                if len(albums) != 0
+                if len(albums) != 0:
                     print("+ got album list")
                     for album in albums:
                         if album != None:
