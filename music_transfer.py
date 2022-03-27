@@ -44,31 +44,54 @@ if __name__ == "__main__": # launched as main file
             if uinput == "vk show a":
                 n = int(input("amount of albums: "))
                 albums = vk.albums(n)
-                print("+ got album list")
-                for a in albums:
-                    print(str(a))
+                if len(albums) != 0:
+                    print("+ got album list")
+                    for a in albums:
+                        print(str(a))
+                else:                    
+                    print("- no albums were found")
 
             if uinput == "vk show at":
-                a = str(input("enter album title: "))
+                a = str(input("album title: "))
                 album = vk.get_album(a) # searching for correct album
-                print("+ got album")
-                print(str(album))
                 if album != None:
+                    print("+ got album")
+                    print(str(album))
                     n = int(input("amount of tracks: "))
                     tracks = vk.album_tracks(album.vk_owner_id, album.vk_album_id, n)
                     print("+ got track list")
                     for b in list(tracks):
                         print(str(b))
+                else:
+                    print("- no album with this title")
 
             if uinput == "vk show at repeat":
                 a = str(input("album title: "))
                 album = vk.get_album(a) # searching for correct album
-                print("+ got album")
-                print(str(album))
                 if album != None:
+                    print("+ got album")
+                    print(str(album))
                     tracks = vk.album_tracks(album.vk_owner_id, album.vk_album_id, 0)
                     print("+ got track list")
-                    show_at_repeat(tracks)
+                    show_repeat(tracks)
+                else:
+                    print("- no album with this title")
+
+            if uinput == "vk show at repeat id":
+                a = str(input("album owner_id: "))
+                albums = vk.get_albums(a)
+                if len(albums) != 0
+                    print("+ got album list")
+                    for album in albums:
+                        if album != None:
+                            print("---------------------------")
+                            print("+ got album")
+                            print(str(album))
+                            tracks = vk.album_tracks(album.vk_owner_id, album.vk_album_id, 0)
+                            print("+ got track list")
+                            show_repeat(tracks)
+                else: 
+                    print("- no albums with this owner_id, try again")
                     
         print("---------------------------")
         uinput = input("command: ")
