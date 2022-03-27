@@ -9,4 +9,4 @@ current functionality:
 - interaction with menu
 - help menu
 - vk auth
-- vk show albums, album tracks, album tracks repeats
+- vk show albums, album tracks, album tracks repeats, albums tracks repeats for id
