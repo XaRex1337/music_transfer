@@ -4,7 +4,7 @@ __all__ = [ # import *
     "cvk_from_file",
     "cvk_on_need",
     "cvk_help",
-    "show_at_repeat"
+    "show_repeat"
 ]
 
 import vk_api
@@ -56,8 +56,9 @@ def cvk_help():
     print("     - show a / shows albums / asks for amount, enter <= 0 for all")
     print("     - show at / shows album tracks / asks for amount, enter <= 0 for all")
     print("     - show at repeat / shows album tracks repeats / if track is saved multiple times it shows amount of it")
+    print("     - show at repeat id / shows track repeats in all albums that have the same owner_id")
 
-def show_at_repeat(tracks):
+def show_repeat(tracks):
     """
     shows repeats in track list
     - tracks ~ list of ctrack objects
@@ -152,7 +153,7 @@ class cvk:
     def connect(self, login, password) -> vk_api.VkApi:
         """
         connects with user account
-        ! default access
+        ! access only to audio and messages
         - input ~ login&password for entry
          output - VkApi object
         """
@@ -187,9 +188,22 @@ class cvk:
         output - calbum object
         """
         albums = self.albums(0)
-        for album in self.albums(0):
+        for album in albums:
             if album.title == title:
                 return album
+
+    def get_albums(self, owner_id):
+        """
+        get albums on user account with required owner_id
+        - owner_id ~ required owner_id to search
+        output - list of calbum objects
+        """
+        album_list = list()
+        albums = self.albums(0)
+        for album in albums:
+            if str(album.vk_owner_id) == owner_id:
+                album_list.append(album)
+        return album_list
 
     def album_tracks(self, owner_id, album_id, n) -> list:
         """
@@ -212,6 +226,5 @@ class cvk:
         # creating list of own ctrack objects
         tracks = list()
         for track in api_tracks[:n]:
-            #tracks.append(ctrack(audio, track))
             tracks.append(ctrack(track))
         return tracks
